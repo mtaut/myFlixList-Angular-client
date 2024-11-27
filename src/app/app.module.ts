@@ -15,9 +15,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UserRegistrationFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
