@@ -1,0 +1,46 @@
+<div class="movie-container">
+  <button id="menu-button" mat-raised-button [matMenuTriggerFor]="menu">
+    Menu
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="userProfile()">Profile</button>
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+  <h1>Welcome to myFlixList!</h1>
+  <mat-card *ngFor="let movie of movies" let i="index" class="movie-card">
+    <mat-card-content>
+      <mat-card-header class="movie-header">
+        <mat-card-title>{{ movie.Title }}</mat-card-title>
+        <mat-card-subtitle
+          >Directed by: {{ movie.Director.Name }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <img [src]="movie.ImagePath" alt="{{ movie.Title }}" />
+      <mat-card-actions>
+        <button (click)="getGenre(movie.Genre)" mat-button color="primary">
+          Genre
+        </button>
+        <button
+          (click)="getDirector(movie.Director.Name)"
+          mat-button
+          color="primary"
+        >
+          Director
+        </button>
+        <button
+          (click)="getDescription(movie.Description)"
+          mat-button
+          color="primary"
+        >
+          Premise
+        </button>
+        <mat-icon
+          (click)="toggleFavorite(movie)"
+          [ngClass]="{ favorite: movie.isFavorite }"
+        >
+          {{ movie.isFavorite ? "favorite" : "favorite_border" }}
+        </mat-icon>
+      </mat-card-actions>
+    </mat-card-content>
+  </mat-card>
+</div>

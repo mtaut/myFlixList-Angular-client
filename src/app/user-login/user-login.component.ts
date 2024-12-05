@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { UserRegistrationService } from '../fetch-api-data.service';
 import { UserRegistrationFormComponent } from '../user-registration-form/user-registration-form.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-login',
@@ -17,7 +18,8 @@ export class UserLoginComponent implements OnInit {
   constructor(
     public fetchApiData: UserRegistrationService,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -37,6 +39,7 @@ export class UserLoginComponent implements OnInit {
             duration: 2000,
           }
         );
+        this.router.navigate(['movies']);
       },
       (response) => {
         console.log(response);

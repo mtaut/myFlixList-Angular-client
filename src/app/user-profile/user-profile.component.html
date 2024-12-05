@@ -1,0 +1,90 @@
+<div class="profile-container">
+  <button id="menu-button" mat-raised-button [matMenuTriggerFor]="menu">
+    Menu
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="getMovies()">Home</button>
+    <button mat-menu-item (click)="logout()">Logout</button>
+    <button mat-menu-item (click)="deleteUser()">Delete Profile</button>
+  </mat-menu>
+  <br />
+  <mat-card class="profile-card">
+    <mat-card-title>Your Profile Details</mat-card-title>
+    <mat-card-content>
+      <!-- display user's details here -->
+      <div>
+        <p><strong>Username:</strong> {{ userData.Username }}</p>
+        <p><strong>Email:</strong> {{ userData.Email }}</p>
+        <p><strong>Birthday:</strong> {{ userData.Birthday }}</p>
+      </div>
+
+      <!-- button to show edit details form here -->
+      <button mat-raised-button color="primary" (click)="editMode = !editMode">
+        {{ editMode ? "Cancel Edit" : "Edit User Details" }}
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- edit form here-->
+  <mat-card class="edit-card" *ngIf="editMode">
+    <mat-card-title>Edit User Details</mat-card-title>
+    <mat-card-content>
+      <form (ngSubmit)="updateUser()">
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            [(ngModel)]="editUser.Username"
+            name="Username"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            [(ngModel)]="editUser.Password"
+            name="Password"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            [(ngModel)]="editUser.Email"
+            name="Email"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Birthday</mat-label>
+          <input
+            matInput
+            type="date"
+            [(ngModel)]="editUser.Birthday"
+            name="Birthday"
+          />
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit">
+            Save Changes
+          </button>
+          <button
+            mat-button
+            color="warn"
+            type="button"
+            (click)="editMode = false"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <h2>Favorite Movies</h2>
+</div>
