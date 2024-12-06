@@ -1,3 +1,4 @@
+// Component landing page for where users can register/login
 import { Component, OnInit } from '@angular/core';
 import { UserRegistrationFormComponent } from '../user-registration-form/user-registration-form.component';
 import { UserLoginComponent } from '../user-login/user-login.component';

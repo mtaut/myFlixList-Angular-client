@@ -1,3 +1,4 @@
+// Info dialog component for movie information that will display dialog box with title and information
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 

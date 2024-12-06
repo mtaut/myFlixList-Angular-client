@@ -1,10 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { UserRegistrationService } from '../fetch-api-data.service';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+// Movie card component (Home screen) after user logs in
+import { Component, OnInit } from '@angular/core'; // Core angular imports
+import { UserRegistrationService } from '../fetch-api-data.service'; // Import for API calls
+import { MatDialog } from '@angular/material/dialog'; // Import for dialog feedback
+import { Router } from '@angular/router'; // Import for routing
+import { InfoDialogComponent } from '../info-dialog/info-dialog.component'; // Import for dialog feedback
+import { MatSnackBar } from '@angular/material/snack-bar'; // Import for UI notifications
 
+/**
+ * MovieCardComponent
+ *
+ * This component is responsible for displaying a list of movies in a card layout.
+ * It includes functionality to fetch movies, interact with dialogs, and manage user-specific data.
+ */
 @Component({
   selector: 'app-movie-card',
   standalone: false,
@@ -22,11 +29,22 @@ export class MovieCardComponent implements OnInit {
     public snackBar: MatSnackBar
   ) {}
 
+  /**
+   * Lifecycle hook that is called after the component is initialized.
+   *
+   * - Calls `initializeUser` to load the logged-in user data from localStorage.
+   * - Calls `getMovies` to fetch and display the list of movies.
+   */
   ngOnInit(): void {
     this.initializeUser();
     this.getMovies();
   }
 
+  /**
+   * Initializes the logged-in user by retrieving their data from localStorage.
+   *
+   * If user data exists in localStorage, it is parsed and assigned to the `user` property.
+   */
   initializeUser(): void {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -34,13 +52,16 @@ export class MovieCardComponent implements OnInit {
     }
   }
 
-  // movie card with movie info: genre, director, storyline premis
+  // Fetches list of movies from API, with movie info: genre, director, storyline premise
 
   getMovies(): void {
+    // Fetches movies from API
     this.fetchApiData.getAllMovies().subscribe(
       (response: any) => {
         this.movies = response.map((movie: any) => ({
           ...movie,
+
+          // Checks favorite movies with user
           isFavorite: this.user?.FavoriteMovies.includes(movie._id),
         }));
         console.log(this.movies);
@@ -109,11 +130,12 @@ export class MovieCardComponent implements OnInit {
         );
     }
   }
-
+  // Routes user to their profile view
   userProfile(): void {
     this.router.navigate(['profile']);
   }
 
+  // Routes user to logout/welcome page
   logout(): void {
     this.router.navigate(['welcome']);
     localStorage.removeItem('user');

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { UserRegistrationService } from '../fetch-api-data.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+// Component for user profile page
+import { Component, OnInit } from '@angular/core'; // Core Angular imports to create templates and complete lifecycle hooks
+import { UserRegistrationService } from '../fetch-api-data.service'; // Import for API calls
+import { MatSnackBar } from '@angular/material/snack-bar'; // Import for UI interaction
+import { Router } from '@angular/router'; // Import for routing
 
 @Component({
   selector: 'app-user-profile',
@@ -10,6 +11,8 @@ import { Router } from '@angular/router';
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss',
 })
+
+// Holds logged-in user's profile data
 export class UserProfileComponent implements OnInit {
   userData: any = {};
   editUser: any = { username: '', password: '', email: '', birthday: '' };
@@ -31,6 +34,7 @@ export class UserProfileComponent implements OnInit {
     this.getFavoriteMovies();
   }
 
+  // Function to get user from local storage
   getUser(): void {
     const username = localStorage.getItem('username'); // Ensure username is fetched from localStorage
     if (username) {
@@ -54,18 +58,23 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  // Function to update user info
   updateUser(): void {
+    // Call to editUser method to update user info
     this.fetchApiData
       .editUser(this.userData.Username, this.updateUser)
       .subscribe(
         (response) => {
+          // On successful response from API show a success notification
           this.snackBar.open('User details updated successfully', 'OK', {
             duration: 2000,
           });
+          // Update local userData with new values from upateUser
           this.userData = { ...this.updateUser };
           this.editMode = false;
         },
         (error) => {
+          // Log errors to console for debugging
           console.error(error);
           this.snackBar.open('Error updating user profile', 'OK', {
             duration: 2000,
@@ -74,22 +83,30 @@ export class UserProfileComponent implements OnInit {
       );
   }
 
+  // Function to delete user's profile
   deleteUser(): void {
+    // Call deleteUser method from UserRegistrationService to delete user
     this.fetchApiData.deleteUser(this.userData.Username).subscribe(
       () => {
+        // On successful deletion show a success notification
         this.snackBar.open('Profile deleted successfully.', 'OK', {
           duration: 2000,
         });
+        // Clear user data from local storage
         localStorage.clear();
+        // Navigate to welcome screen
         this.router.navigate(['/welcome']);
       },
       (error) => {
+        // Log errors to console for debugging
         console.log(error);
       }
     );
   }
 
+  // Function to get user's favorite movies
   getFavoriteMovies(): void {
+    // Call to API to match favorite movies against user's username
     this.fetchApiData
       .getUserFavoriteMovies(this.userData.Username, '')
       .subscribe(
@@ -97,6 +114,7 @@ export class UserProfileComponent implements OnInit {
           this.favoriteMovies = response;
         },
         (error) => {
+          // Log errors to console for debugging
           console.error(error);
           this.snackBar.open('Error fetching favorite movies.', 'OK', {
             duration: 2000,
@@ -105,7 +123,9 @@ export class UserProfileComponent implements OnInit {
       );
   }
 
+  // Function to delete movie from user's favorite movies
   deleteFavoriteMovie(movieId: string): void {
+    // Call to API to delete movie
     this.fetchApiData
       .deleteFavoriteMovie(this.userData.Username, movieId)
       .subscribe(
@@ -116,6 +136,7 @@ export class UserProfileComponent implements OnInit {
           this.getFavoriteMovies();
         },
         (error) => {
+          // Log error to console for debugging
           console.error(error);
           this.snackBar.open('Error removing movie from favorites.', 'OK', {
             duration: 2000,
