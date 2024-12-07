@@ -1,6 +1,6 @@
 # MyFlixList Angular Client
 
-MyFlixList Angular Client is an Angular built client-side app, based on the existing server-side code (REST API and database), myFlixList. The app allows users to register a profile, view information about movies, and add movies to a list of their favorites. The app has been deployed with GitHub Pages. This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.1.
+MyFlixList Angular Client is an Angular built app, based on the existing server-side code (REST API and database), myFlixList. The app allows users to register a profile, view information about movies, and add movies to a list of their favorites. The app has been deployed with GitHub Pages. This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.1.
 
 ## Development server
 
